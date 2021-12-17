@@ -1,0 +1,36 @@
+### Create new user AWS
+
+- [x] 1. IAM user creation
+  - `IAM` -> `Users` -> `Add users` 
+    - username
+    - Programmatic Access
+  - `Permission`
+    - Attach existing policies directly
+      - AssumeRolePolicy (put tick)
+      - Leave blank tag field
+    - `Create User`
+    - `Copy Acees key id && Secret access key`
+- [x] 2. AWS configure terminal
+  - `aws configure` 
+    - provide keys
+- [x] 3. Check permission
+  - `aws ec2 describe-instances` (it should be shown Error occured)
+- [x] 4. Give admin access
+  - Create new role
+    - `Roles` -> `Another AWS account` 
+    - Account Id (on top right corner under My account)
+    - External ID (new password for this user)
+    - Next Permission
+  - Role policy
+    - AdministratorAccess
+    - Leave blan tag sections
+    - Role name (give it new one)
+    - Create Role
+  - Copy Role ARN
+    - Find new role name and copy ARN
+- [x] 5. Attach new role for the user
+  - aws sts assume-role --role-arn `<arn>` --role-session-name <session name> --external-id "password" 
+  - export AWS_ACCESS_KEY_ID=*** (copy it from the above)
+  - export AWS_SECRET_ACCESS_KEY=***
+  - export AWS_SESSION_TOKEN=***
+  - Check permission using `aws ec2 describe-instances`
